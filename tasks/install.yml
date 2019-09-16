@@ -1,0 +1,16 @@
+---
+- name: Create the loki group
+  group:
+    name: "{{ loki_system_group }}"
+    state: present
+    system: true
+
+- name: Create the loki user
+  user:
+    name: "{{ loki_system_user }}"
+    groups: "{{ loki_system_group }}"
+    append: true
+    shell: /usr/sbin/nologin
+    system: true
+    createhome: false
+    home: /
