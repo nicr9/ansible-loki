@@ -1,2 +1,4 @@
 ---
 loki_version: latest
+loki_http_listen_host: 0.0.0.0
+loki_http_listen_port: 3100
