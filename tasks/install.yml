@@ -20,7 +20,7 @@
     path: "{{ item }}"
     state: directory
     owner: root
-    group: loki
+    group: "{{ loki_system_group }}"
     mode: 0770
   with_items:
     - "{{ loki_config_dir }}"
@@ -34,13 +34,13 @@
   until: _download_archive is succeeded
   retries: 5
   delay: 2
-  deletgate_to: localhost
+  delegate_to: localhost
 
 - name: unpack loki binaries
   command: "gunzip /tmp/loki_linux_{{ go_arch }}.gz"
   args:
     creates: "/tmp/loki_linux_{{ go_arch }}"
-  deletgate_to: localhost
+  delegate_to: localhost
 
 - name: propagate loki binary
   copy:
