@@ -47,8 +47,6 @@
     dest: "/usr/local/bin/loki"
     mode: 0755
     owner: root
-    group: root
-  with_items:
-    - loki
+    group: loki
   notify:
     - restart loki

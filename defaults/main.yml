@@ -2,3 +2,7 @@
 loki_version: latest
 loki_http_listen_host: 0.0.0.0
 loki_http_listen_port: 3100
+
+loki_system_user: "loki"
+loki_system_group: "loki"
+loki_config_dir: "/etc/loki"
