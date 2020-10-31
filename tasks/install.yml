@@ -27,8 +27,8 @@
 
 - name: download loki binary to local folder
   get_url:
-    url: "https://github.com/grafana/loki/releases/download/v{{ loki_version }}/loki_linux_{{ go_arch }}.gz"
-    dest: "/tmp/loki_linux_{{ go_arch }}.gz"
+    url: "https://github.com/grafana/loki/releases/download/v{{ loki_version }}/{{ loki_release }}"
+    dest: "/tmp/{{ loki_release }}"
     checksum: "sha256:{{ loki_checksum }}"
   register: _download_archive
   until: _download_archive is succeeded
@@ -36,16 +36,15 @@
   delay: 2
   delegate_to: localhost
 
-- name: unpack loki binaries
-  command: "gunzip /tmp/loki_linux_{{ go_arch }}.gz"
-  args:
-    creates: "/tmp/loki_linux_{{ go_arch }}"
-  delegate_to: localhost
+- name: propagate loki binaries to host
+  unarchive:
+    src: "/tmp/{{ loki_release }}"
+    dest: "/tmp"
 
-- name: propagate loki binary
+- name: move binary to /usr/local/bin
   copy:
-    src: "/tmp/loki_linux_{{ go_arch }}"
-    dest: "/usr/local/bin/{{ item }}"
+    src: "/tmp/{{ loki_target }}"
+    dest: "/usr/local/bin/loki"
     mode: 0755
     owner: root
     group: root

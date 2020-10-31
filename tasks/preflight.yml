@@ -30,4 +30,4 @@
     loki_checksum: "{{ item.split(' ')[0] }}"
   with_items:
     - "{{ lookup('url', 'https://github.com/grafana/loki/releases/download/v' + loki_version + '/SHA256SUMS', wantlist=True) | list }}"
-  when: "('loki_linux_' + go_arch + '.gz') in item"
+  when: "loki_release in item"
